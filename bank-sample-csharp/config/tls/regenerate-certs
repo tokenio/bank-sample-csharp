@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# ./regenerate-certs : Generate key.pem and cert.pem for TLS communication
+
+# ./regenerate-certs other.example.com : As above, but set up to serve
+#                                        from other.example.com instead
+#                                        of default domain.
+
+domain=demo.example.com # default domain
+
+if [ "$1" != "" ]; then
+    domain=$1
+fi
+
+# Generate cert
+openssl req \
+    -x509 \
+    -nodes \
+    -newkey rsa:4096 \
+    -keyout key_temp.pem \
+    -subj "/C=US/ST=CA/L=San Francisco/O=Token Inc/CN=${domain}" \
+    -out cert.pem \
+    -days 120
+
+# Convert RSA key into pkcs8 format to consume from java
+openssl pkcs8 \
+    -topk8 \
+    -inform PEM \
+    -outform PEM \
+    -nocrypt \
+    -in key_temp.pem \
+    -out key.pem
+
+rm key_temp.pem

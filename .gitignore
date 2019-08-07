@@ -1,0 +1,7 @@
+**/bin/
+**/obj/
+*.csproj.DotSettings
+
+.idea/
+.vs/
+.DS_Store
