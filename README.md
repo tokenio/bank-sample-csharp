@@ -1,2 +1,2 @@
 # bank-sample-csharp
-C# bank sample repo
+C# Bank Sample Repo
