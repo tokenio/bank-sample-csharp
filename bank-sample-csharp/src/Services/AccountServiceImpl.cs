@@ -10,13 +10,14 @@ using Tokenio.Proto.Common.TransferInstructionsProtos;
 using Tokenio.Sdk.Api;
 using Tokenio.Sdk.Api.Service;
 using Balance = Tokenio.Sdk.Api.Balance;
+using AccountService = Tokenio.Sdk.Api.Service.AccountService;
 
 namespace Tokenio.BankSample.Services
 {
     /// <summary>
     /// Sample implementation of the {@link AccountService}. Returns fake data.
     /// </summary>
-    public class AccountServiceImpl : IAccountService
+    public class AccountServiceImpl : AccountService
     {
         private readonly IAccounting accounts;
 

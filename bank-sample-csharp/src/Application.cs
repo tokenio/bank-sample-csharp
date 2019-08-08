@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using log4net;
 using Tokenio.Sdk;
+using Tokenio.Sdk.GrpcServer;
 
 namespace Tokenio.BankSample
 {
@@ -38,7 +40,7 @@ namespace Tokenio.BankSample
             Factory factory = new Factory("config/application.conf");
 
             // Build a gRPC server instance.
-            ServerBuilder server = ServerBuilder
+            ServerBuilder serverBuilder = ServerBuilder
                     .ForPort(args.port)
                     .ReportErrorDetails()
                     .WithAccountService(factory.AccountService())
@@ -48,15 +50,21 @@ namespace Tokenio.BankSample
 
             if (args.useSsl)
             {
-                server.WithTls(
+                serverBuilder.WithTls(
                         "config/tls/cert.pem",
                         "config/tls/key.pem",
                         "config/tls/trusted-certs.pem");
             }
 
+            RpcServer server = serverBuilder.Build();
+
             // You will need to Ctrl-C to exit.
-            server.Build().Start();
+            server.Start();
             logger.Info("Server started on port: " + args.port);
+            Console.WriteLine("Hit return to stop the server ");
+            Console.ReadKey();
+
+            server.Close();
         }
     }
 }
