@@ -30,7 +30,7 @@ namespace Tokenio.BankSample.Model.Impl
 
         public override BankAccount GetHoldAccount(string currency)
         {
-            var holdaccount = holdAccounts[currency];
+            var holdaccount = holdAccounts.ContainsKey(currency) ? holdAccounts[currency] : null;
             if (holdaccount != null)
             {
                 return holdaccount.ToBankAccount();
@@ -41,7 +41,7 @@ namespace Tokenio.BankSample.Model.Impl
 
         public override BankAccount GetFxAccount(string currency)
         {
-            var fxaccount = fxAccounts[currency];
+            var fxaccount = fxAccounts.ContainsKey(currency) ? fxAccounts[currency] : null;
             if (fxaccount == null)
             {
                 throw new BankException(StatusCode.FailureAccountNotFound, "FX account is not found for: " + currency);                

@@ -44,7 +44,7 @@ namespace Tokenio.BankSample.Model.Impl
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Balance LookupBalance(BankAccount account) {
             var acc = config.TryLookupAccount(account);
-            if (accounts[acc] != null)
+            if (accounts.ContainsKey(acc) && accounts[acc] != null)
             {
                 return accounts[acc].GetBalance();
             }
@@ -102,7 +102,7 @@ namespace Tokenio.BankSample.Model.Impl
             BankAccount account,
             string transactionId) {
             var acc = config.TryLookupAccount(account);
-            if (accounts[acc] != null)
+            if (accounts.ContainsKey(acc) && accounts[acc] != null)
             {
                 return accounts[acc].LookupTransaction(transactionId);
             }
@@ -115,7 +115,7 @@ namespace Tokenio.BankSample.Model.Impl
             int offset,
             int limit) {
             var acc = config.LookupAccount(account);
-            if (accounts[acc] != null)
+            if (accounts.ContainsKey(acc) && accounts[acc] != null)
             {
                 return accounts[acc].LookupTransactions(offset, limit);
             }

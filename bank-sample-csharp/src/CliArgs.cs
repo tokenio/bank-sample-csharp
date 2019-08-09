@@ -21,18 +21,18 @@ namespace Tokenio.BankSample
             var app = new CommandLineApplication();
             app.HelpOption("-h|--help");
             var portCmd = app.Option("--port|-p", "gRPC port to listen on", CommandOptionType.SingleValue);
-            var usesslCmd = app.Option("--ssl | -s", "gRPC port to listen on", CommandOptionType.SingleValue);
-            var usehttpCmd = app.Option("--http", "gRPC port to listen on", CommandOptionType.SingleValue);
-            var httpBearerTokenCmd = app.Option("--http-bearer-token", "gRPC port to listen on", CommandOptionType.SingleValue);
-            var configCmd = app.Option("--config| -c", "gRPC port to listen on", CommandOptionType.SingleValue);
-            var usageCmd = app.Option("--usage|-u", "gRPC port to listen on", CommandOptionType.SingleValue);
+            var usesslCmd = app.Option<bool>("--ssl | -s", "Use SSL", CommandOptionType.NoValue);
+            var usehttpCmd = app.Option<bool>("--http", "Use HTTP", CommandOptionType.NoValue);
+            var httpBearerTokenCmd = app.Option("--http-bearer-token", "Set HTTP Bearer token", CommandOptionType.SingleValue);
+            var configCmd = app.Option("--config| -c", "Config directory location", CommandOptionType.SingleValue);
+            var usageCmd = app.Option<bool>("--usage|-u", "Show usage", CommandOptionType.NoValue);
             app.Execute(argv);
 
             port = portCmd.HasValue() ? int.Parse(portCmd.Value()) : port;
-            useSsl = usesslCmd.HasValue() ? bool.Parse(usesslCmd.Value()) : useSsl;
+            useSsl = usesslCmd.HasValue();
             config = configCmd.HasValue() ? configCmd.Value() : config;
-            usage = usageCmd.HasValue() ? bool.Parse(usageCmd.Value()) : usage;
-            useHttp = usehttpCmd.HasValue() ? bool.Parse(usehttpCmd.Value()) : useHttp;
+            usage = usageCmd.HasValue();
+            useHttp = usehttpCmd.HasValue();
             httpBearerToken = httpBearerTokenCmd.HasValue() ? httpBearerTokenCmd.Value() : httpBearerToken;
         }
 

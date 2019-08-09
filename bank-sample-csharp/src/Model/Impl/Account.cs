@@ -68,7 +68,7 @@ namespace Tokenio.BankSample.Model.Impl
         /// <returns></returns>
         internal AccountTransaction CommitTransaction(string transactionId)
         {
-            var transaction = transactionsById[transactionId];
+            var transaction = transactionsById.ContainsKey(transactionId) ? transactionsById[transactionId] : null;
             balanceCurrent -= transaction.Amount;
             transaction.Status(StatusCode.Success);
             return transaction;
@@ -82,7 +82,7 @@ namespace Tokenio.BankSample.Model.Impl
         /// <returns></returns>
         internal AccountTransaction RollbackTransaction(string transactionId)
         {
-            var transaction = transactionsById[transactionId];
+            var transaction = transactionsById.ContainsKey(transactionId) ? transactionsById[transactionId] : null;
             balanceCurrent += transaction.Amount;
             transaction.Status(StatusCode.FailureCanceled);
             return transaction;

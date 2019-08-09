@@ -15,7 +15,7 @@ namespace Tokenio.BankSample.Services
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public byte[] GetValue(string key) {
-            return storage[key] ?? null;
+            return storage.ContainsKey(key) ? storage[key] : null;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
