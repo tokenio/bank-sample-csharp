@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tokenio.Proto.BankLink;
-using Tokenio.Sdk;
+using Tokenio.Sdk.Utils;
 
 namespace Tokenio.BankSample.Model.Impl
 {

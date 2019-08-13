@@ -1,6 +1,4 @@
-﻿using System;
-using Tokenio.BankSample.Model.Impl;
-using Tokenio.Proto.Common.AccountProtos;
+﻿using Tokenio.Proto.Common.AccountProtos;
 
 namespace Tokenio.BankSample.Model.Impl
 {

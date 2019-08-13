@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Tokenio.BankSample.Config;
-using Tokenio.BankSample.Model;
 using Tokenio.Proto.Common.AccountProtos;
 using Balance = Tokenio.Sdk.Api.Balance;
-using Tokenio.Sdk.Utils;
 using Tokenio.Proto.Common.TransactionProtos;
 
 namespace Tokenio.BankSample.Model.Impl

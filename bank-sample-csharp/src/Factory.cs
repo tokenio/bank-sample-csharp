@@ -5,9 +5,9 @@ using Tokenio.BankSample.Model;
 using Tokenio.BankSample.Model.Impl;
 using Tokenio.BankSample.Services;
 using Tokenio.Proto.Common.SecurityProtos;
-using Tokenio.Sdk;
 using Tokenio.Sdk.Api.Service;
 using System.Globalization;
+using Tokenio.Sdk.Utils;
 
 namespace Tokenio.BankSample
 {
@@ -85,7 +85,7 @@ namespace Tokenio.BankSample
             return new TransferServiceImpl(accounting);
         }
 
-        public string ToTitleCase(string str)
+        private static string ToTitleCase(string str)
         {
             TextInfo tesxtInfo = new CultureInfo("en-US", false).TextInfo;
             str = tesxtInfo.ToTitleCase(str.ToLower());

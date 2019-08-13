@@ -106,11 +106,10 @@ namespace Tokenio.BankSample.Model.Impl
         /// <returns>list of payments</returns>
         internal IList<AccountTransaction> LookupTransactions(int offset, int limit)
         {
-            if((offset + limit) < transactions.Count)
-            {
-                return transactions.ToList().GetRange(offset, limit);
-            }           
-            return transactions.ToList().GetRange(offset, transactions.Count);
+            return transactions.ToList()
+                .GetRange(
+                    offset,
+                    (offset + limit) < transactions.Count ? limit : transactions.Count);
         }
     }
 }

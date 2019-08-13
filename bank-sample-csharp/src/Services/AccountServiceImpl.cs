@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Io.Token.Proto.Bankapi;
+using Grpc.Core;
 using Tokenio.BankSample.Config;
 using Tokenio.BankSample.Model;
 using Tokenio.Proto.Common.AccountProtos;
@@ -10,14 +9,14 @@ using Tokenio.Proto.Common.TransferInstructionsProtos;
 using Tokenio.Sdk.Api;
 using Tokenio.Sdk.Api.Service;
 using Balance = Tokenio.Sdk.Api.Balance;
-using AccountService = Tokenio.Sdk.Api.Service.AccountService;
+using StatusCode = Io.Token.Proto.Bankapi.StatusCode;
 
 namespace Tokenio.BankSample.Services
 {
     /// <summary>
     /// Sample implementation of the {@link AccountService}. Returns fake data.
     /// </summary>
-    public class AccountServiceImpl : AccountService
+    public class AccountServiceImpl : IAccountService
     {
         private readonly IAccounting accounts;
 
@@ -26,18 +25,18 @@ namespace Tokenio.BankSample.Services
             this.accounts = accounts;
         }
 
-        public override Balance GetBalance(BankAccount account)
+        public Balance GetBalance(BankAccount account)
         {
             return accounts.LookupBalance(account)
                 ?? throw new BankException(StatusCode.FailureAccountNotFound, "Account not found");
         }
 
-        public override Transaction GetTransaction(BankAccount account, string transactionId)
+        public Transaction GetTransaction(BankAccount account, string transactionId)
         {
             return accounts.LookupTransaction(account, transactionId).ToTransaction();
         }
 
-        public override PagedList<Transaction> GetTransactions(
+        public PagedList<Transaction> GetTransactions(
             BankAccount account,
             string offset,
             int limit)
@@ -50,7 +49,7 @@ namespace Tokenio.BankSample.Services
             return new PagedList<Transaction>(transactions, EncodeCursor(cursor + transactions.Count));
         }
 
-        public override IList<TransferDestination> ResolveTransferDestinations(BankAccount account)
+        public IList<TransferDestination> ResolveTransferDestinations(BankAccount account)
         {
             AccountConfig accountConfig = accounts
                     .LookupAccount(account)
@@ -86,18 +85,23 @@ namespace Tokenio.BankSample.Services
             return destinations;
         }
 
-        private int DecodeCursor(string encoded)
+        public AccountDetails GetAccountDetails(BankAccount account)
+        {
+            throw new RpcException(new Status(Grpc.Core.StatusCode.Unimplemented,""));
+        }
+
+        private static int DecodeCursor(string encoded)
         {
             if (string.IsNullOrEmpty(encoded))
             {
                 // An empty cursor indicates paging should begin at the start.
                 return 0;
             }
-             // Parse the cursor. The format of the string is up to the bank and is opaque to Token.
+            // Parse the cursor. The format of the string is up to the bank and is opaque to Token.
             return int.Parse(encoded);            
         }
 
-        private string EncodeCursor(int offset)
+        private static string EncodeCursor(int offset)
         {
             // Encode the cursor to return in the PagedList. This value will be passed into
             // getTransactions in subsequent requests.

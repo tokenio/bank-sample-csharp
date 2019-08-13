@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using log4net;
 using Tokenio.Sdk;
-using Tokenio.Sdk.GrpcServer;
+using Tokenio.Sdk.Rpc;
 
 namespace Tokenio.BankSample
 {
@@ -12,7 +12,7 @@ namespace Tokenio.BankSample
     /// The application parses command line arguments and then configures and starts
     /// gRPC server that listens for incoming requests.
     /// </summary>
-    public class Application
+    public static class Application
     {
         private static readonly ILog logger = LogManager
             .GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -60,11 +60,11 @@ namespace Tokenio.BankSample
 
             // You will need to Ctrl-C to exit.
             server.Start();
-            logger.Info("Server started on port: " + args.port);
-            Console.WriteLine("Hit return to stop the server ");
+            logger.Info("Hit return to stop the server ");
             Console.ReadKey();
-
+            logger.Info("Stopping the server....");
             server.Close();
+            logger.Info("Server stopped");
         }
     }
 }

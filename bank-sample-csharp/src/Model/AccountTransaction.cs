@@ -1,5 +1,4 @@
-﻿using System;
-using Grpc.Core.Utils;
+﻿using Grpc.Core.Utils;
 using Io.Token.Proto.Bankapi;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.TransactionProtos;

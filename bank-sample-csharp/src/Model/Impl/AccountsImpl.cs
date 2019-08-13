@@ -59,24 +59,22 @@ namespace Tokenio.BankSample.Model.Impl
         {
             var swift = ToSwiftAccount(account);
 
-            return accounts.Where(a => a.Bic.Equals(swift.Bic))
-                .Where(a => a.Number.Equals(swift.Account))
-                .First();
+            return accounts
+                .Where(a => a.Bic.Equals(swift.Bic))
+                .First(a => a.Number.Equals(swift.Account));
         }
 
         private static IDictionary<string, AccountConfig> IndexAccounts(
             IList<AccountConfig> accounts)
         {
-            return accounts.ToDictionary((acc) => acc.Balance.Currency);
+            return accounts.ToDictionary(acc => acc.Balance.Currency);
         }
 
         private static BankAccount.Types.Swift ToSwiftAccount(BankAccount account)
         {
-            if (account.AccountCase != AccountCase.Swift)
-            {
-                return new BankAccount.Types.Swift();
-            }
-            return account.Swift;            
+            return account.AccountCase != AccountCase.Swift 
+                ? new BankAccount.Types.Swift() 
+                : account.Swift;
         }
     }
 }

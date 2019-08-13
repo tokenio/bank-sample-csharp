@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Tokenio.BankSample.Model;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.AddressProtos;
-using Tokenio.Sdk;
+using Tokenio.Sdk.Api;
 using Tokenio.Sdk.Security;
 
 namespace Tokenio.BankSample.Config
@@ -131,7 +131,7 @@ namespace Tokenio.BankSample.Config
                                     x["access-token"],
                                     x["member-id"],
                                     namedAccounts);
-                }).ToDictionary((auth) => auth.AccessToken);
+                }).ToDictionary(auth => auth.AccessToken);
         }
 
 
@@ -156,7 +156,7 @@ namespace Tokenio.BankSample.Config
                             };
                         }
 
-                        double balance = (x["balance"] != null)
+                        double balance = x["balance"] != null
                         ? double.Parse(x["balance"])
                         : 0;
 
@@ -170,7 +170,7 @@ namespace Tokenio.BankSample.Config
                     }).ToList();
         }
 
-        private NamedAccount ToNamedAccount(AccountConfig accountConfig)
+        private static NamedAccount ToNamedAccount(AccountConfig accountConfig)
         {
             return new NamedAccount(
                     new BankAccount
