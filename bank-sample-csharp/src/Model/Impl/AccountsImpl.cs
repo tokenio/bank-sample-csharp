@@ -24,8 +24,8 @@ namespace Tokenio.BankSample.Model.Impl
         {
             this.holdAccounts = IndexAccounts(holdAccounts);
             this.fxAccounts = IndexAccounts(fxAccounts);
-            this.accounts = new List<AccountConfig>(holdAccounts);
-            accounts.Concat(fxAccounts).Concat(customerAccounts).ToList();
+            var list = new List<AccountConfig>(holdAccounts);
+            this.accounts = list.Concat(fxAccounts).Concat(customerAccounts).ToList();
         }
 
         public override BankAccount GetHoldAccount(string currency)
