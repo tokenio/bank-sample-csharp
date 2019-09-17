@@ -20,7 +20,7 @@ namespace Tokenio.BankSample.Model.Impl
         public BankAuthorization GetBankAuthorization(string accessToken)
         {
             AccessTokenAuthorization authorization = authorizations.ContainsKey(accessToken) ? authorizations[accessToken] : null;
-            return authorizer.CreateAuthorization(authorization.MemberId, authorization.Accounts);
+            return authorizer.CreateAuthorization(RequestContext.GetAccountHolderId(), authorization.Accounts);
         }
     }
 }
