@@ -48,9 +48,9 @@ namespace Tokenio.BankSample.Model
             var lookupAccount = TryLookupAccount(account);
             if (lookupAccount == null)
             {
-                return lookupAccount;
+                throw new BankException(StatusCode.FailureAccountNotFound, "Account not found");
             }
-            throw new BankException(StatusCode.FailureAccountNotFound, "Account not found");            
+            return lookupAccount;             
         }
     }
 }

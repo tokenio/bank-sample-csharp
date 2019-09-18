@@ -85,6 +85,33 @@ namespace Tokenio.BankSample
             return new TransferServiceImpl(accounting);
         }
 
+        /// <summary>
+        /// Creates new {@link AccountManagementService} instance.
+        /// </summary>
+        /// <returns>new account management service instance</returns>
+        internal IAccountManagementService AccountManagementService()
+        {
+            return new AccountManagementServiceImpl();
+        }
+
+        /// <summary>
+        /// Creates new {@link ConsentManagementService} instance.
+        /// </summary>
+        /// <returns>new consent management service instance</returns>
+        internal IConsentManagementService ConsentManagementService()
+        {
+            return new ConsentManagementServiceImpl();
+        }
+
+        /// <summary>
+        /// Creates new {@link NotificationService} instance.
+        /// </summary>
+        /// <returns>new notification service instance</returns>
+        internal INotificationService NotificationService()
+        {
+            return new NotificationServiceImpl();
+        }
+
         private static string ToTitleCase(string str)
         {
             TextInfo tesxtInfo = new CultureInfo("en-US", false).TextInfo;

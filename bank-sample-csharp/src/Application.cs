@@ -46,7 +46,10 @@ namespace Tokenio.BankSample
                     .WithAccountService(factory.AccountService())
                     .WithAccountLinkingService(factory.AccountLinkingService())
                     .WithTransferService(factory.TransferService())
-                    .WithStorageService(factory.StorageService());
+                    .WithStorageService(factory.StorageService())
+                    .WithAccountManagementService(factory.AccountManagementService())
+                    .WithConsentManagementService(factory.ConsentManagementService())
+                    .WithNotificationService(factory.NotificationService());
 
             if (args.useSsl)
             {
