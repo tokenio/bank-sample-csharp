@@ -25,10 +25,16 @@ namespace Tokenio.BankSample.Model.Impl
             AccountTransaction transaction)
         {
             this.currency = currency;
-            this.transactions = new List<AccountTransaction> { transaction };
-            this.transactionsById = new Dictionary<string, AccountTransaction> { { transaction.Id, transaction } };
+            this.transactions = new List<AccountTransaction>();
+            this.transactionsById = new Dictionary<string, AccountTransaction>();
             this.balanceAvailable = balanceAvailable;
             this.balanceCurrent = balanceCurrent;
+
+            if (transaction != null)
+            {
+                transactions.Add(transaction);
+                transactionsById.Add(transaction.Id, transaction);
+            }
         }
 
         internal Balance GetBalance()
