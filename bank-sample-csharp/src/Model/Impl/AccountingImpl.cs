@@ -2,15 +2,15 @@
 using System.Runtime.CompilerServices;
 using Tokenio.BankSample.Config;
 using Tokenio.Proto.Common.AccountProtos;
-using Balance = Tokenio.Sdk.Api.Balance;
 using Tokenio.Proto.Common.TransactionProtos;
+using Balance = Tokenio.Sdk.Api.Balance;
 
 namespace Tokenio.BankSample.Model.Impl
 {
-	/// <summary>
-	/// Configuration based account service implementation.
-	/// </summary>
-	public sealed class AccountingImpl : IAccounting
+    /// <summary>
+    /// Configuration based account service implementation.
+    /// </summary>
+    public sealed class AccountingImpl : IAccounting
     {
         private readonly IAccounts config;
         private readonly IDictionary<AccountConfig, Account> accounts;
@@ -25,8 +25,9 @@ namespace Tokenio.BankSample.Model.Impl
                 map.Add(account, new Account(
                                     account.Balance.Currency,
                                     double.Parse(account.Balance.Available.ToString()),
-                                    double.Parse(account.Balance.Current.ToString()))
-                                    );
+                                    double.Parse(account.Balance.Current.ToString()),
+                                    account.Transaction
+                                    ));
             }
             this.accounts = map;
             this.ledger = new AccountingLedger();

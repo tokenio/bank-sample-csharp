@@ -18,11 +18,15 @@ namespace Tokenio.BankSample.Model.Impl
         private double balanceAvailable;
         private double balanceCurrent;
 
-        internal Account(string currency, double balanceAvailable, double balanceCurrent)
+        internal Account(
+            string currency,
+            double balanceAvailable,
+            double balanceCurrent,
+            AccountTransaction transaction)
         {
             this.currency = currency;
-            this.transactions = new List<AccountTransaction>();
-            this.transactionsById = new Dictionary<string, AccountTransaction>();
+            this.transactions = new List<AccountTransaction> { transaction };
+            this.transactionsById = new Dictionary<string, AccountTransaction> { { transaction.Id, transaction } };
             this.balanceAvailable = balanceAvailable;
             this.balanceCurrent = balanceCurrent;
         }
@@ -105,7 +109,7 @@ namespace Tokenio.BankSample.Model.Impl
         /// <param name="limit">max number of payments to lookup</param>
         /// <returns>list of payments</returns>
         internal IList<AccountTransaction> LookupTransactions(int offset, int limit)
-        {
+        { 
             return transactions.ToList()
                 .GetRange(
                     offset,

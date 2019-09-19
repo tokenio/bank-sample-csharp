@@ -1,4 +1,5 @@
-﻿using Grpc.Core.Utils;
+﻿using System;
+using Grpc.Core.Utils;
 using Io.Token.Proto.Bankapi;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.TransactionProtos;
@@ -100,7 +101,8 @@ namespace Tokenio.BankSample.Model
                 {
                     Value = Amount.ToString(),
                     Currency = Currency
-                }
+                },
+                CreatedAtMs = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds,
             };                   
         }
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Tokenio.BankSample.Model;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.AddressProtos;
+using Tokenio.Proto.Common.TransactionProtos;
 using Tokenio.Sdk.Api;
 using Tokenio.Sdk.Security;
 
@@ -137,6 +138,7 @@ namespace Tokenio.BankSample.Config
 
         private IList<AccountConfig> AccountsFor(string category)
         {
+
             return config.GetSection("accounts:" + category)
                     .GetChildren()
                     .ToList()
@@ -155,6 +157,40 @@ namespace Tokenio.BankSample.Config
                                 Country = addressConfig["country"]
                             };
                         }
+                        AccountTransaction transaction = null;
+
+                        if (category.Equals("customers"))
+                        {
+                            var transactionConfig = x.GetSection("transaction");
+                            TransactionType type = TransactionType.InvalidType;
+                            if (transactionConfig["transaction-type"] == "DEBIT")
+                                type = TransactionType.Debit;
+                            else if (transactionConfig["transaction-type"] == "CREDIT")
+                                type = TransactionType.Credit;
+                            transaction = AccountTransaction.NewBuilder(type)
+                            .Amount(Double.Parse(transactionConfig["amount"]), transactionConfig["currency"])
+                            .TransferAmount(Double.Parse(transactionConfig["amount"]), transactionConfig["currency"])
+                            .Description(transactionConfig["description"])
+                            .From(new BankAccount
+                            {
+                                Swift = new BankAccount.Types.Swift
+                                {
+                                    Bic = x["bic"],
+                                    Account = x["number"]
+                                }
+                            })
+                            .To(new BankAccount
+                            {
+                                Swift = new BankAccount.Types.Swift
+                                {
+                                    Bic = transactionConfig["to:bic"],
+                                    Account = transactionConfig["to:number"]
+                                }
+                            })
+                            .Id(transactionConfig["id"])
+                            .ReferenceId(transactionConfig["id"])
+                            .Build();
+                        }
 
                         double balance = x["balance"] != null
                         ? double.Parse(x["balance"])
@@ -166,7 +202,8 @@ namespace Tokenio.BankSample.Config
                             x["bic"],
                             x["number"],
                             x["currency"],
-                            balance);
+                            balance,
+                            transaction);
                     }).ToList();
         }
 

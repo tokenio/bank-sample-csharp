@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Tokenio.BankSample.Model;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.AddressProtos;
 using Tokenio.Sdk.Api;
@@ -17,7 +18,9 @@ namespace Tokenio.BankSample.Config
         public string Bic { get; private set; }
         public string Number { get; private set; }
         public Balance Balance { get; private set; }
+        public AccountTransaction Transaction { get; private set; }
 
+        
         /// <summary>
         /// Creates new bank account data structure.
         /// </summary>
@@ -27,15 +30,16 @@ namespace Tokenio.BankSample.Config
         /// <param name="number">account number</param>
         /// <param name="currency">account currency</param>
         /// <param name="balance">account balance</param>
+        /// <param name="transaction">transaction</param>
         /// <returns>newly created account</returns>
         public static AccountConfig Create(
-
             string name,
             Address address,
             string bic,
             string number,
             string currency,
-            double balance)
+            double balance,
+            AccountTransaction transaction)
         {
             return new AccountConfig(
                     name,
@@ -47,7 +51,8 @@ namespace Tokenio.BankSample.Config
                             decimal.Parse(balance.ToString()),
                             decimal.Parse(balance.ToString()),
                             Util.EpochTimeMillis(),
-                            new List<TypedBalance>()));
+                            new List<TypedBalance>()),
+                    transaction);
         }
 
         private AccountConfig(
@@ -55,14 +60,15 @@ namespace Tokenio.BankSample.Config
                     Address address,
                     string bic,
                     string number,
-                    Balance balance)
+                    Balance balance,
+                    AccountTransaction transaction)
         {
             this.Name = name;
             this.Address = address;
             this.Bic = bic;
             this.Number = number;
             this.Balance = balance;
-
+            this.Transaction = transaction;
         }
 
         /// <summary>
