@@ -1,6 +1,6 @@
 ﻿using Tokenio.Proto.Common.AccountProtos;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     /// <summary>
     ///  Represents an account journal entry posted to the source and

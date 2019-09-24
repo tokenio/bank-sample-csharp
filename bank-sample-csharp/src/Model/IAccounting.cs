@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Tokenio.BankSample.Config;
+using Tokenio.Integration.Api;
 using Tokenio.Proto.Common.AccountProtos;
-using Tokenio.Sdk.Api;
 
 namespace Tokenio.BankSample.Model
 {

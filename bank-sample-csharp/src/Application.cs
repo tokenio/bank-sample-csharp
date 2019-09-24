@@ -2,8 +2,8 @@
 using System.IO;
 using System.Reflection;
 using log4net;
-using Tokenio.Sdk;
-using Tokenio.Sdk.Rpc;
+using Tokenio.Integration;
+using Tokenio.Integration.Rpc;
 
 namespace Tokenio.BankSample
 {

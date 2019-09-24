@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Tokenio.Integration.Utils;
 using Tokenio.Proto.BankLink;
-using Tokenio.Sdk.Utils;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     public class AccountLinkingImpl : IAccountLinking
     {

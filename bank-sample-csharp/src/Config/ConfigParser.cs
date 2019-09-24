@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Tokenio.BankSample.Model;
+using Tokenio.Integration.Api;
+using Tokenio.Integration.Security;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.AddressProtos;
 using Tokenio.Proto.Common.TransactionProtos;
-using Tokenio.Sdk.Api;
-using Tokenio.Sdk.Security;
 
 namespace Tokenio.BankSample.Config
 {

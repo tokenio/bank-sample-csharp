@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 using Tokenio.BankSample.Config;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.TransactionProtos;
-using Balance = Tokenio.Sdk.Api.Balance;
+using Balance = Tokenio.Integration.Api.Balance;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     /// <summary>
     /// Configuration based account service implementation.

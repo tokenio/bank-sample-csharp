@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Tokenio.BankSample.Model;
+using Tokenio.Integration.Api;
+using Tokenio.Integration.Utils;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.AddressProtos;
-using Tokenio.Sdk.Api;
-using Tokenio.Sdk.Utils;
 using static Tokenio.Proto.Common.TransactionProtos.Balance.Types;
 
 namespace Tokenio.BankSample.Config

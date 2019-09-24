@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     /// <summary>
     /// Maintains ledger of transactions.

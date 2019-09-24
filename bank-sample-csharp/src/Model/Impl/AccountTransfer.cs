@@ -2,7 +2,7 @@
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.MoneyProtos;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     /// <summary>
     ///  Represents a transaction posted to the source and destination accounts. The

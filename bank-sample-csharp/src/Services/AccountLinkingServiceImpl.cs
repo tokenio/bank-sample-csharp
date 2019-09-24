@@ -1,6 +1,6 @@
 ﻿using Tokenio.BankSample.Model;
+using Tokenio.Integration.Api.Service;
 using Tokenio.Proto.BankLink;
-using Tokenio.Sdk.Api.Service;
 
 namespace Tokenio.BankSample.Services
 {

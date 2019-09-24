@@ -3,12 +3,12 @@ using System.Linq;
 using Grpc.Core;
 using Tokenio.BankSample.Config;
 using Tokenio.BankSample.Model;
+using Tokenio.Integration.Api;
+using Tokenio.Integration.Api.Service;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.TransactionProtos;
 using Tokenio.Proto.Common.TransferInstructionsProtos;
-using Tokenio.Sdk.Api;
-using Tokenio.Sdk.Api.Service;
-using Balance = Tokenio.Sdk.Api.Balance;
+using Balance = Tokenio.Integration.Api.Balance;
 using StatusCode = Io.Token.Proto.Bankapi.StatusCode;
 
 namespace Tokenio.BankSample.Services

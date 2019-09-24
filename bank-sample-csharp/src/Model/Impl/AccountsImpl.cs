@@ -2,11 +2,11 @@
 using System.Linq;
 using Io.Token.Proto.Bankapi;
 using Tokenio.BankSample.Config;
+using Tokenio.Integration.Api;
 using Tokenio.Proto.Common.AccountProtos;
-using Tokenio.Sdk.Api;
 using AccountCase = Tokenio.Proto.Common.AccountProtos.BankAccount.AccountOneofCase;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     /// <summary>
     /// Configuration based {@link Accounts} implementation.

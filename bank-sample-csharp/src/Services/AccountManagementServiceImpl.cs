@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using Tokenio.Integration.Api.Service;
 using Tokenio.Proto.Common.AccountProtos;
-using Tokenio.Sdk.Api.Service;
 
 namespace Tokenio.BankSample.Services
 {

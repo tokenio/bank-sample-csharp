@@ -1,9 +1,9 @@
 ﻿using System;
 using Grpc.Core.Utils;
 using Io.Token.Proto.Bankapi;
+using Tokenio.Integration.Utils;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.TransactionProtos;
-using Tokenio.Sdk.Utils;
 
 namespace Tokenio.BankSample.Model
 {

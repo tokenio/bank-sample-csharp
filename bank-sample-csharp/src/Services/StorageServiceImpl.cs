@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Tokenio.Sdk.Api.Service;
+using Tokenio.Integration.Api.Service;
 using static Io.Token.Proto.Bankapi.SetValueRequest.Types;
 
 namespace Tokenio.BankSample.Services

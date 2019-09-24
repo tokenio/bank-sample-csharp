@@ -1,8 +1,8 @@
 ﻿using Io.Token.Proto.Bankapi;
 using Tokenio.BankSample.Model;
-using Tokenio.Sdk.Api;
+using Tokenio.Integration.Api;
 using TransactionType = Tokenio.Proto.Common.TransactionProtos.TransactionType;
-using TransferService = Tokenio.Sdk.Api.Service.TransferService;
+using TransferService = Tokenio.Integration.Api.Service.TransferService;
 
 namespace Tokenio.BankSample.Services
 {

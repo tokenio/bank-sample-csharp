@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Tokenio.Sdk.Api;
+using Tokenio.Integration.Api;
 
 
 namespace Tokenio.BankSample.Model

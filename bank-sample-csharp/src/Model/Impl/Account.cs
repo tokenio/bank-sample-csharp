@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Io.Token.Proto.Bankapi;
-using Tokenio.Sdk.Api;
-using Tokenio.Sdk.Utils;
+using Tokenio.Integration.Api;
+using Tokenio.Integration.Utils;
 using static Tokenio.Proto.Common.TransactionProtos.Balance.Types;
 
-namespace Tokenio.BankSample.Model.Impl
+namespace Tokenio.BankSample.Model
 {
     /// <summary>
     /// Maintains a list of per account transactions.

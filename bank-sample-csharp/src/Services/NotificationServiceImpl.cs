@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using log4net;
 using Microsoft.Extensions.Caching.Memory;
+using Tokenio.Integration.Api.Service;
 using Tokenio.Proto.Common.NotificationProtos;
 using Tokenio.Proto.Common.SubscriberProtos;
-using Tokenio.Sdk.Api.Service;
 
 namespace Tokenio.BankSample.Services
 {

@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.Extensions.Configuration;
 using Tokenio.BankSample.Config;
 using Tokenio.BankSample.Model;
-using Tokenio.BankSample.Model.Impl;
 using Tokenio.BankSample.Services;
+using Tokenio.Integration.Api.Service;
+using Tokenio.Integration.Utils;
 using Tokenio.Proto.Common.SecurityProtos;
-using Tokenio.Sdk.Api.Service;
-using System.Globalization;
-using Tokenio.Sdk.Utils;
 
 namespace Tokenio.BankSample
 {
@@ -15,7 +14,7 @@ namespace Tokenio.BankSample
     /// A factory class that is used to instantiate various services that are
     /// exposed by the gRPC server.
     /// </summary>
-    sealed class Factory
+    public sealed class Factory
     {
         private readonly IAccounting accounting;
         private readonly IAccountLinking accountLinking;
@@ -24,7 +23,7 @@ namespace Tokenio.BankSample
         /// Creates new factory instance.
         /// </summary>
         /// <param name="configFilePath">path to the config directory</param>
-        internal Factory(string configFilePath)
+        public Factory(string configFilePath)
         {
             ConfigParser config = new ConfigParser(new ConfigurationBuilder()
                                 .AddJsonFile(configFilePath)
@@ -52,7 +51,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link StorageService} instance.
         /// </summary>
         /// <returns>new storage service instance</returns>
-        internal IStorageService StorageService()
+        public IStorageService StorageService()
         {
             return new StorageServiceImpl();
         }
@@ -61,7 +60,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link AccountService} instance.
         /// </summary>
         /// <returns>new account linking service instance</returns>
-        internal IAccountService AccountService()
+        public IAccountService AccountService()
         {
             return new AccountServiceImpl(accounting);
         }
@@ -70,7 +69,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link AccountLinkingService} instance.
         /// </summary>
         /// <returns></returns>
-        internal IAccountLinkingService AccountLinkingService()
+        public IAccountLinkingService AccountLinkingService()
         {
             return new AccountLinkingServiceImpl(accountLinking);
         }
@@ -80,7 +79,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link TransferService} instance.
         /// </summary>
         /// <returns>new transfer service instance</returns>
-        internal ITransferService TransferService()
+        public ITransferService TransferService()
         {
             return new TransferServiceImpl(accounting);
         }
@@ -89,7 +88,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link AccountManagementService} instance.
         /// </summary>
         /// <returns>new account management service instance</returns>
-        internal IAccountManagementService AccountManagementService()
+        public IAccountManagementService AccountManagementService()
         {
             return new AccountManagementServiceImpl();
         }
@@ -98,7 +97,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link ConsentManagementService} instance.
         /// </summary>
         /// <returns>new consent management service instance</returns>
-        internal IConsentManagementService ConsentManagementService()
+        public IConsentManagementService ConsentManagementService()
         {
             return new ConsentManagementServiceImpl();
         }
@@ -107,7 +106,7 @@ namespace Tokenio.BankSample
         /// Creates new {@link NotificationService} instance.
         /// </summary>
         /// <returns>new notification service instance</returns>
-        internal INotificationService NotificationService()
+        public INotificationService NotificationService()
         {
             return new NotificationServiceImpl();
         }
