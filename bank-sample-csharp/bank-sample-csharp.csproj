@@ -6,13 +6,11 @@
         <RootNamespace>Tokenio.BankSample</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="{Add sdk-integration-csharp dependency}" />
-    </ItemGroup>
-    <ItemGroup>
         <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.4" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
-	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
         <PackageReference Include="log4net" Version="2.0.8" />
+        <PackageReference Include="Token.SDK.Integration" Version="0.0.1" />
     </ItemGroup>
     <ItemGroup>
         <None Update="config\application.conf">
@@ -24,7 +22,7 @@
         <None Update="config\tls\key.pem">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-	<None Update="config\tls\trusted-certs.pem">
+        <None Update="config\tls\trusted-certs.pem">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>

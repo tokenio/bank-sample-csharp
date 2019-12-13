@@ -1,5 +1,5 @@
 ﻿using System;
-using Tokenio.Sdk.Security;
+using Tokenio.Integration.Security;
 using Xunit;
 
 namespace Tokenio.BankSample
