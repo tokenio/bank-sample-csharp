@@ -42,6 +42,7 @@ namespace Tokenio.BankSample
             // Build a gRPC server instance.
             ServerBuilder serverBuilder = ServerBuilder
                     .ForPort(args.port)
+                    .ForHostName("localhost")
                     .ReportErrorDetails()
                     .WithAccountService(factory.AccountService())
                     .WithAccountLinkingService(factory.AccountLinkingService())
