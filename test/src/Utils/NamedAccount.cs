@@ -13,9 +13,8 @@ namespace Tokenio.BankSample.Utils
 
         public NamedAccount(BankAccount bankAccount, string displayName)
         {
-            if (displayName.Length == 0) throw new NullReferenceException();
+            this.displayName = displayName ?? throw new NullReferenceException();
             this.bankAccount = ValidateBankAccount(bankAccount);
-            this.displayName = displayName;
         }
 
         public NamedAccount(string bankId,

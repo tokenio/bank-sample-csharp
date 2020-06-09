@@ -8,6 +8,7 @@ using Tokenio.BankSample.Utils;
 using Tokenio.Proto.Common.ConsentProtos;
 using Tokenio.Proto.Common.MemberProtos;
 using Tokenio.Proto.Common.SecurityProtos;
+using Tokenio.Proto.Common.TransactionProtos;
 using Tokenio.Proto.Gateway;
 using Tokenio.Utils;
 using Xunit;
@@ -117,6 +118,58 @@ namespace Tokenio.BankSample
             bankClient.DeleteUser(userId);
         }
 
+        private void TestTransferConsent(BankClient bankClient)
+        {
+            var userId = bankClient.CreateUser();
+            var tokenRequest = Sample.TransferTokenRequest(
+                tppMember.MemberId(),
+                bankClient.GetBankId());
+            var requestId = tppMember.StoreTokenRequestBlocking(tokenRequest);
+            
+            // Bank receives the request Id.
+            var consentRequest = bankClient.GetConsentRequest(requestId);
+            
+            ConsentRequestAssertion.AssertConsentRequest(consentRequest)
+                .MatchesTokenRequest(tokenRequest);
+            
+            // Bank creates the consent.
+            var request = new CreateConsentRequest
+            {
+                Params = new CreateConsent
+                {
+                    RequestId = requestId,
+                    UserId = userId,
+                    Transfer = new Transfer
+                    {
+                        AccountIdentifier = accountIdentifiers[0]
+                    }
+                }
+            };
+            var consent = bankClient.CreateConsent(Util.ToJson(request));
+            ConsentAssertion.AssertConsent(consent)
+                .IsFromUser(userId)
+                .HasPayment(
+                    bankClient.GetBankId(),
+                    accountIdentifiers[0],
+                    consentRequest.TransferBody);
+            
+            // TPP redeems the token.
+            var result = tppRule.Token()
+                .GetTokenRequestResult(requestId)
+                .Result;
+            Assert.Equal(consent.Id, result.TokenId);
+            Assert.NotNull(result.Signature);
+            var token = tppMember.GetTokenBlocking(result.TokenId);
+            var transfer = tppMember.RedeemTokenBlocking(token);
+            Assert.Contains(
+                transfer.Status,
+                new List<TransactionStatus>
+                {
+                    TransactionStatus.Processing,
+                    TransactionStatus.Success
+                });
+        }
+
         [Fact]
         public void DeleteBankUser()
         {
@@ -127,6 +180,12 @@ namespace Tokenio.BankSample
         public void ResourceTypeAccessConsent()
         {
             TestResourceTypeAccessConsent(bankBearerAuthRule.GetBankClient());
+        }
+        
+        [Fact]
+        public void TransferConsent()
+        {           
+            TestTransferConsent(bankBearerAuthRule.GetBankClient());
         }
     }
 }

@@ -89,6 +89,37 @@ namespace Tokenio.BankSample.Asserts
             return this;
         }
 
+        public ConsentAssertion HasPayment(string bankId,
+            string accountIdentifier,
+            TokenRequestPayload.Types.TransferBody transferBody)
+        {
+            return HasPayment(
+                new NamedAccount(bankId, accountIdentifier, ""),
+                transferBody);
+        }
+
+        public ConsentAssertion HasPayment(NamedAccount namedAccount,
+            TokenRequestPayload.Types.TransferBody transferBody)
+        {
+            var payment = actual.Payment;
+            payment.Should()
+                .Equals(namedAccount.GetBankAccount());
+            Equal(transferBody.Currency, payment.LifetimeAmount.Currency);
+            Equal(
+                0,
+                payment.LifetimeAmount.Currency.CompareTo(transferBody.Currency));
+            Equal(transferBody.Currency, payment.Amount.Currency);
+            var amount = string.IsNullOrEmpty(transferBody.Amount)
+                ? decimal.Parse(transferBody.LifetimeAmount)
+                : decimal.Parse(transferBody.Amount);
+            Equal(
+                0,
+                decimal.Parse(payment.Amount.Value)
+                    .CompareTo(amount));
+            NotEmpty(payment.TransferDestinations);
+            return this;
+        }
+
         private bool IsEqual(BankAccount bankAccount1, BankAccount bankAccount2)
         {
             return Normalize(bankAccount1)

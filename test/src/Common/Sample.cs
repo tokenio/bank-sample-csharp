@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.AliasProtos;
 using Tokenio.Proto.Common.SecurityProtos;
@@ -11,16 +12,37 @@ namespace Tokenio.BankSample.Common
     public abstract class Sample
     {
         private static readonly string TOKEN_REALM = "token";
+        private static readonly double AMOUNT = 30.1;
+        private static readonly string CURRENCY = "EUR";
 
         private static readonly string TPP_CALLBACK =
             "https://merchant-demo.dev.token.io/callback";
 
-        private static string RandomAlphabetic(int size)
+        public static string RandomAlphaNumeric(int size)
         {
             return Guid.NewGuid()
                 .ToString()
                 .Replace("-", string.Empty)
                 .Substring(0, size);
+        }
+
+        private static string RandomAlphabetic(int size, bool lowerCase)
+        {
+            var randomBuilder = new StringBuilder();
+            var random = new Random();
+            char ch;
+            for (var i = 0; i < size; i++)
+            {
+                ch =
+                    Convert.ToChar(
+                        Convert.ToInt32(
+                            Math.Floor(26 * random.NextDouble() + 65)));
+                randomBuilder.Append(ch);
+            }
+            if (lowerCase)
+                return randomBuilder.ToString()
+                    .ToLower();
+            return randomBuilder.ToString();
         }
 
         public static TransferEndpoint TransferEndpoint()
@@ -37,8 +59,8 @@ namespace Tokenio.BankSample.Common
             {
                 Token = new BankAccount.Types.Token
                 {
-                    AccountId = RandomAlphabetic(15),
-                    MemberId = RandomAlphabetic(15)
+                    AccountId = RandomAlphaNumeric(15),
+                    MemberId = RandomAlphaNumeric(15)
                 }
             };
         }
@@ -55,7 +77,7 @@ namespace Tokenio.BankSample.Common
                 : "@example.com";
             return new Alias
             {
-                Value = RandomAlphabetic(15)
+                Value = RandomAlphaNumeric(15)
                     .ToLower() + suffix,
                 Type = Alias.Types.Type.Email,
                 Realm = TOKEN_REALM
@@ -66,7 +88,7 @@ namespace Tokenio.BankSample.Common
         {
             return new Alias
             {
-                Value = RandomAlphabetic(15)
+                Value = RandomAlphaNumeric(15)
                     .ToLower() + ".noverify",
                 Type = Alias.Types.Type.Domain,
                 Realm = TOKEN_REALM
@@ -77,7 +99,7 @@ namespace Tokenio.BankSample.Common
         {
             return new TokenMember
             {
-                Id = RandomAlphabetic(15)
+                Id = RandomAlphaNumeric(15)
             };
         }
 
@@ -95,9 +117,9 @@ namespace Tokenio.BankSample.Common
         {
             return new Signature
             {
-                MemberId = RandomAlphabetic(15),
-                Signature_ = RandomAlphabetic(15),
-                KeyId = RandomAlphabetic(15)
+                MemberId = RandomAlphaNumeric(15),
+                Signature_ = RandomAlphaNumeric(15),
+                KeyId = RandomAlphaNumeric(15)
             };
         }
 
@@ -109,14 +131,14 @@ namespace Tokenio.BankSample.Common
             return new TokenPayload
             {
                 Version = "1.0",
-                RefId = RandomAlphabetic(15),
+                RefId = RandomAlphaNumeric(15),
                 Issuer = TokenMember(),
                 From = TokenMember(),
                 EffectiveAtMs = now.Add(span)
                     .Millisecond,
                 ExpiresAtMs = now.Subtract(span)
                     .Millisecond,
-                Description = RandomAlphabetic(10),
+                Description = RandomAlphaNumeric(10),
                 Transfer = new TransferBody
                 {
                     Redeemer = redeemer,
@@ -139,23 +161,62 @@ namespace Tokenio.BankSample.Common
                     TokenRequestPayload.Types.AccessBody.Types.ResourceType
                         .Balances)
                 .SetRefId(
-                    RandomAlphabetic(15)
+                    RandomAlphaNumeric(15)
                         .ToLower())
                 .SetUserRefId(
-                    RandomAlphabetic(15)
+                    RandomAlphaNumeric(15)
                         .ToLower())
                 .SetRedirectUrl(TPP_CALLBACK)
                 .SetToMemberId(tppMemberId)
                 .SetDescription(
-                    RandomAlphabetic(15)
+                    RandomAlphaNumeric(15)
                         .ToLower())
                 .SetCsrfToken(
-                    RandomAlphabetic(15)
+                    RandomAlphaNumeric(15)
                         .ToLower())
                 .SetBankId(bankId)
                 .SetReceiptRequested(false)
                 .SetState(
-                    RandomAlphabetic(15)
+                    RandomAlphaNumeric(15)
+                        .ToLower())
+                .Build();
+        }
+
+        public static TransferDestination SwiftDestination()
+        {
+            return new TransferDestination
+            {
+                Swift = new TransferDestination.Types.Swift
+                {
+                    Bic = RandomAlphabetic(15, true),
+                    Account = RandomAlphabetic(15, true)
+                }
+            };
+        }
+
+        public static TokenRequest TransferTokenRequest(string tppMemberId,
+            string bankId)
+        {
+            return TokenRequest.TransferTokenRequestBuilder(AMOUNT, CURRENCY)
+                .SetRefId(
+                    RandomAlphaNumeric(15)
+                        .ToLower())
+                .SetUserRefId(
+                    RandomAlphaNumeric(15)
+                        .ToLower())
+                .SetRedirectUrl(TPP_CALLBACK)
+                .SetToMemberId(tppMemberId)
+                .SetDescription(
+                    RandomAlphaNumeric(15)
+                        .ToLower())
+                .SetCsrfToken(
+                    RandomAlphaNumeric(15)
+                        .ToLower())
+                .SetBankId(bankId)
+                .SetReceiptRequested(false)
+                .AddDestination(SwiftDestination())
+                .SetState(
+                    RandomAlphaNumeric(15)
                         .ToLower())
                 .Build();
         }

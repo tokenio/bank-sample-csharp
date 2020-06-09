@@ -2,6 +2,7 @@
 using System.Net;
 using Io.Token.Proto.Bankapi;
 using Microsoft.Extensions.Configuration;
+using Tokenio.BankSample.Common;
 using Tokenio.BankSample.Utils;
 using Tokenio.Proto.Common.AccountProtos;
 using Tokenio.Proto.Common.TransferInstructionsProtos;
@@ -40,7 +41,7 @@ namespace Tokenio.BankSample.Fank
 
         public NamedAccount NewAccount(Client client)
         {
-            var accountName = TestUtil.RandomAlphabetic(15)
+            var accountName = Sample.RandomAlphaNumeric(15)
                 .ToLower();
             var random = new Random();
             var bankAccountNumber = "iban:" + Util.EpochTimeMillis() +
